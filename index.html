@@ -798,7 +798,7 @@ function chooseWhy(x) {
   solved();
 }
 // この回の「自信あり」の数と当たり（結果の画面に出す。開き直しても残るよう回の記録に入れる）
-// 1問につき1回だけ数える（同じ問題を2つのタブで開いても2回足さない。CodeRabbit menkyo-nenrei#1）
+// 1問につき1回だけ数える（同じ問題を2つのタブで開いても2回足さない。CodeRabbit の指摘）
 function sureCount(ok) { const q = cur.i + ":" + cur.tag; save((s) => { const r = s.runs[MODE]; if (!same(r) || r.dsq === q) return; r.dsq = q; r.ds = r.ds || { n: 0, ok: 0 }; r.ds.n++; if (ok) r.ds.ok++; }); }
 function choose(j) {
   if (cur.done || cur.step === 2) return;
