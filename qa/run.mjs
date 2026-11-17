@@ -68,6 +68,7 @@ const NEVER = {};
   check("問題：種類は19（やさしい6・ふつう7・むずかしい6）・表の種類と同じ", G.KINDS.length === 19 && [0, 1, 2].map((l) => G.kindsOf(l).length).join() === "6,7,6" && Object.keys(TB).length === 19);
   check("答えは10の期間とも出る・選び肢のもとの一覧（LEVELS）は短い順（画面の選び肢はわざと混ぜる）", ORDER.every((o) => G.KINDS.some((k) => k.ans === o)) && JSON.stringify(G.LEVELS) === JSON.stringify(ORDER));
   check("2段目は3つ（特許法・商標法・実用新案法と意匠法）とも答えに出る", Object.keys(G.GROUPS).join() === "tokkyo,shohyo,hoka" && Object.keys(G.GROUPS).every((g) => G.KINDS.some((k) => k.grp === g)));
+  check("追納は第4年以降の特許料だけと問いと説明に書く（第1〜3年分は追納できない。特許法 第108条・第112条。CodeRabbit tokkyo-kikan#1）", [...Array(200)].every((_, j) => G.make(`tsuino|t${j}`).q.includes("第4年以降")) && G.BY.tsuino.why.includes("第4年以降"));
   check("料金の額・罰則は出さない（説明に入れない）", !G.KINDS.some((k) => /円|費用|罰金|罰則|懲役/.test(k.why + k.key + k.look)));
   const longWhy = [], longLook = [], longOpt = [];
   for (const k of G.KINDS) { if ([...k.why].length > 100) longWhy.push(k.id); if ([...k.look].length > 45 || [...k.key].length > 60) longLook.push(k.id); for (let s = 0; s < 200; s++) { const P = G.make(`${k.id}|len${s}`); for (const o of P.opts) if ([...o].length > 20) longOpt.push(`${k.id}:${o}`); if ([...P.q].length > 70) longOpt.push(`${k.id}:${P.q}`); } }
